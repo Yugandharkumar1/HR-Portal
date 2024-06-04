@@ -1,0 +1,49 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-5" style="display: flex">
+      <h3>{{ userName }}</h3>
+    </div>
+    <div class="col-xs-6" style="display: flex">
+      <div class="col-xs-1">
+        <button class="btn btn-light">Salary Slip</button>
+      </div>
+      <div class="col-xs-1">
+        <button class="btn btn-light">Leave Application</button>
+      </div>
+      <div class="col-xs-1">
+        <button class="btn btn-light">Attendance Request</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="border" style="margin-top: 30px">
+    <ul class="nav">
+      <li class="nav-item">
+        <a class="nav-link active btn-light" (click)="onClickOverview()"
+          >Overview</a
+        >
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" (click)="onClickJoining()">Joining</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" (click)="onClickAddressAndAccounts()"
+          >Address & Accounts</a
+        >
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" (click)="onClickAttendanceAndLeaves()"
+          >Attendance & Leaves</a
+        >
+      </li>
+    </ul>
+    <app-employee
+      *ngIf="showEmployeeData"
+      [showEmplyeeOverview]="showEmplyeeOverview"
+      [showEmployeeJoining]="showEmployeeJoining"
+      [showEmployeeAddressAndContacts]="showEmployeeAddressAndAccounts"
+      [employeeUserID]="userDetails.userID"
+      [showAttendanceAndLeaves]="showAttendanceAndLeaves"
+    ></app-employee>
+  </div>
+</div>

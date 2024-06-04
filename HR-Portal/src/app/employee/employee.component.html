@@ -1,0 +1,255 @@
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+  }
+  h2 {
+    text-align: center;
+    color: #333;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 18px;
+    min-width: 400px;
+    border-radius: 5px 5px 0 0;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  }
+  thead tr {
+    background-color: #009879;
+    color: #ffffff;
+    text-align: left;
+    font-weight: bold;
+  }
+  th,
+  td {
+    padding: 12px 15px;
+  }
+  tbody tr {
+    border-bottom: 1px solid #dddddd;
+  }
+  tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+  }
+  tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
+  }
+  @media (max-width: 600px) {
+    table {
+      border: 0;
+    }
+    table thead {
+      display: none;
+    }
+    table,
+    table tbody,
+    table tr,
+    table td {
+      display: block;
+      width: 100%;
+    }
+    table tr {
+      margin-bottom: 15px;
+    }
+    table td {
+      text-align: right;
+      padding-left: 50%;
+      position: relative;
+    }
+    table td::before {
+      content: attr(data-label);
+      position: absolute;
+      left: 0;
+      width: 50%;
+      padding-left: 15px;
+      font-weight: bold;
+      text-align: left;
+    }
+  }
+</style>
+
+<div class="container" *ngIf="showEmplyeeOverview">
+  <form [formGroup]="employeeOverviewForm">
+    <div class="form-group">
+      <label for="firstName">First Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="firstName"
+        placeholder="Enter first name"
+        formControlName="firstName"
+      />
+    </div>
+    <div class="form-group">
+      <label for="lastName">Last Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="lastName"
+        placeholder="Enter last name"
+        formControlName="lastName"
+      />
+    </div>
+    <div class="form-group">
+      <label for="dateOfJoining">Date of Joining</label>
+      <input
+        type="text"
+        class="form-control"
+        id="dateOfJoining"
+        formControlName="dateOfJoining"
+        [disabled]="true"
+      />
+    </div>
+    <div class="form-group">
+      <label for="status">Status</label>
+      <input
+        type="text"
+        class="form-control"
+        id="isActive"
+        formControlName="isActive"
+        disabled
+      />
+    </div>
+    <div class="form-group">
+      <label for="fullName">Full Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="fullName"
+        placeholder="Enter full name"
+        formControlName="fullName"
+        disabled
+      />
+    </div>
+    <input
+      type="text"
+      id="hdnUserID"
+      name="hdnUserID"
+      formControlName="userID"
+      hidden
+    />
+    <button
+      type="submit"
+      class="btn btn-primary"
+      style="margin-top: 15px"
+      (click)="onClickSaveEmployeeOverview()"
+    >
+      Save
+    </button>
+    <br />
+  </form>
+</div>
+
+<div class="container" *ngIf="showEmployeeJoining">
+  <form>
+    <div class="form-group">
+      <label for="offerDate">Offer Date</label>
+      <input
+        type="text"
+        id="offerDate"
+        class="form-control"
+        [value]="dateOfJoining"
+        disabled
+      />
+    </div>
+    <div class="form-group"></div>
+    <label for="offerDate">Confirmation Date</label>
+    <input
+      type="text"
+      id="offerDate"
+      class="form-control"
+      [value]="confirmDate"
+      disabled
+    />
+    <br />
+  </form>
+</div>
+
+<div class="container" *ngIf="showEmployeeAddressAndContacts">
+  <form [formGroup]="employeeAddressAndContactForm">
+    <div class="form-group">
+      <label for="Mobile">Mobile</label>
+      <input
+        type="text"
+        id="phoneNumber"
+        class="form-control"
+        formControlName="phoneNumber"
+      />
+    </div>
+    <div class="form-group">
+      <label for="PersonalEmail">Personal Email</label>
+      <input
+        type="text"
+        id="email"
+        class="form-control"
+        formControlName="email"
+      />
+    </div>
+    <div class="form-group">
+      <label for="PersonalEmail">Company Email</label>
+      <input
+        type="text"
+        id="email"
+        class="form-control"
+        formControlName="companyEmail"
+        disabled
+      />
+    </div>
+    <div class="form-group">
+      <label for="offerDate">Country</label>
+      <input
+        type="text"
+        id="offerDate"
+        class="form-control"
+        formControlName="countryName"
+        disabled
+      />
+    </div>
+    <div class="form-group"></div>
+    <label for="offerDate">Region</label>
+    <input
+      type="text"
+      id="offerDate"
+      class="form-control"
+      formControlName="regionName"
+      disabled
+    />
+    <input type="text" formControlName="userID" hidden />
+    <button
+      type="submit"
+      class="btn btn-primary"
+      style="margin-top: 15px"
+      (click)="onClickEmployeeAddressAndContact()"
+    >
+      Save
+    </button>
+    <br />
+  </form>
+</div>
+
+<div *ngIf="showAttendanceAndLeaves">
+  <div class="container-fluid">
+    <h5>Leave Details</h5>
+    <table id="leaveDetailsTable">
+      <thead>
+        <tr>
+          <th>Leave Type ID</th>
+          <th>Leave Status ID</th>
+          <th>Approver ID</th>
+          <th>Submission Date</th>
+          <th>Approval Date</th>
+          <th>User Comment</th>
+          <th>Approver Comment</th>
+          <th>Leave From</th>
+          <th>Leave To</th>
+          <th>Leave Span</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Data will be populated here -->
+      </tbody>
+    </table>
+  </div>
+</div>
